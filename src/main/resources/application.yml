@@ -1,0 +1,29 @@
+# ServerProperties
+server:
+  port: 8080
+  servlet:
+    context-path: /community # 给项目加上路径
+spring:
+  thymeleaf: # ThymeleafProperties
+    cache: false # 关闭thymeleaf的缓存
+  datasource: # mysql数据源（连接池）
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/community?useSSL=false
+    username: root
+    password: xduniversity20
+    type: com.zaxxer.hikari.HikariDataSource # 连接池配置
+    hikari:
+      maximum-pool-size: 15 # 最大连接数
+      minimum-idle: 5 # 最小的连接保留数
+      idle-timeout: 3000 # 等待关闭的毫秒数
+mybatis:
+  mapper-locations: classpath:mapper/*.xml # 映射文件位置 classpath: 打包后就是target.classes包下
+  type-aliases-package: com.nowcoder.community.pojo # 实体类的包名
+  configuration:
+    use-generated-keys: true # 启动自动生成id的组件
+    map-underscore-to-camel-case: true # 下划线转驼峰
+#logging:
+#  level:
+#    com.nowcoder.community: warn # 修改日志级别，调为较低的debug模式，方便检查mapper写的对不对
+#  file:
+#    name: community.log
