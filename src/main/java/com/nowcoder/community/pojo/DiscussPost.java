@@ -2,13 +2,9 @@ package com.nowcoder.community.pojo;
 
 import lombok.Data;
 
+import java.lang.annotation.Documented;
 import java.util.Date;
 
-/**
- * @Author: HRD
- * @Date: 2023/1/5 16:53
- * @Description:
- */
 @Data
 public class DiscussPost {
 

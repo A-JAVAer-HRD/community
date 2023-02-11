@@ -1,4 +1,4 @@
-package com.nowcoder.community.tool;
+package com.nowcoder.community.util;
 
 /**
  * 封装分页相关信息

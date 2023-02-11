@@ -7,6 +7,25 @@
     <sql id="selectFiled">
         id, user_id, title, content, type, status, create_time, comment_count, score
     </sql>
+    <sql id="insertFiled">
+        user_id, title, content, type, status, create_time, comment_count, score
+    </sql>
+
+    <insert id="insertDiscussPost" parameterType="DiscussPost" keyProperty="id">
+        insert into discuss_post(<include refid="insertFiled"></include>)
+        values (#{userId},#{title},#{content},#{type},#{status},#{createTime},#{commentCount},#{score})
+    </insert>
+
+    <update id="updateCommentCount">
+        update discuss_post set comment_count = #{commentCount} where id = #{id}
+    </update>
+    <update id="updateType">
+        update discuss_post set type = #{type} where id = #{id}
+    </update>
+    <update id="updateStatus">
+        update discuss_post set status = #{status} where id = #{id}
+    </update>
+
     <select id="selectDiscussPost" resultType="com.nowcoder.community.pojo.DiscussPost">
         select <include refid="selectFiled"></include>
         from discuss_post
@@ -24,6 +43,17 @@
         <if test="userId!=0">
             and user_id = #{userId}
         </if>
+    </select>
+
+    <select id="selectDiscussPostById" resultType="com.nowcoder.community.pojo.DiscussPost">
+        select <include refid="selectFiled"></include>
+        from discuss_post
+        where id = #{id}
+    </select>
+    <select id="selectAllDiscussPosts" resultType="com.nowcoder.community.pojo.DiscussPost">
+        select <include refid="selectFiled"></include>
+        from discuss_post
+        where status != 2
     </select>
 
 

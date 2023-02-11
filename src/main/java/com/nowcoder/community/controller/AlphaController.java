@@ -1,6 +1,7 @@
 package com.nowcoder.community.controller;
 
 import com.nowcoder.community.service.AlphaService;
+import com.nowcoder.community.util.CommunityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -147,4 +150,64 @@ public class AlphaController {
 
         return list;
     }
+
+    /**
+     * 测试设置cookie
+     */
+    @GetMapping("/cookie/set")
+    @ResponseBody
+    public String setCookie(HttpServletResponse response) {
+        // 创建 cookie
+        Cookie cookie = new Cookie("code", CommunityUtil.generateUUID());
+        // 设置 cookie 生效的范围
+        cookie.setPath("/community/alpha");
+        // 设置 cookie 生存时间 20min
+        cookie.setMaxAge(60 * 20);
+        // 发送 cookie
+        response.addCookie(cookie);
+
+        return "set cookie";
+    }
+
+    /**
+     * 测试 cookie
+     */
+    @GetMapping("/cookie/get")
+    @ResponseBody
+    public String setCookie(@CookieValue("code") String code) {
+        System.out.println(code);
+        return "get cookie";
+    }
+
+    /**
+     * 测试创建session
+     */
+    @GetMapping("/session/set")
+    @ResponseBody
+    public String setSession(HttpSession session) {
+        session.setAttribute("id", 1);
+        session.setAttribute("name", "test");
+        return "set session";
+    }
+
+    /**
+     * 测试使用session
+     */
+    @GetMapping("/session/get")
+    @ResponseBody
+    public String getSession(HttpSession session) {
+        System.out.println(session.getAttribute("id"));
+        System.out.println(session.getAttribute("name"));
+        return "get session";
+    }
+
+    // ajax实例
+    @PostMapping("/ajax")
+    @ResponseBody
+    public String testAjax(String name, int age) {
+        System.out.println(name);
+        System.out.println(age);
+        return CommunityUtil.getJSONString(0,"操作成功！");
+    }
+
 }
